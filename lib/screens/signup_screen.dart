@@ -40,7 +40,7 @@ class SignUpScreen extends StatelessWidget {
               isPassword: true,
             ),
             20.verticalSpace,
-            !Platform.isAndroid
+            Platform.isAndroid
                 ? ButtonWidgetAndroid(buttonText: 'Sign up', onTap: () {})
                 : ButtonWidgetIOS(buttonText: 'Sign up', onTap: () {}),
             40.verticalSpace,

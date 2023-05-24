@@ -31,7 +31,7 @@ class LoginScreen extends StatelessWidget {
               isPassword: true,
             ),
             20.verticalSpace,
-            !Platform.isAndroid
+            Platform.isAndroid
                 ? ButtonWidgetAndroid(buttonText: 'Login', onTap: () {})
                 : ButtonWidgetIOS(buttonText: 'Login', onTap: () {}),
             40.verticalSpace,
