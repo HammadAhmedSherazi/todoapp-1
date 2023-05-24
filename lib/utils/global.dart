@@ -13,3 +13,15 @@ TextStyle headingStyle = TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 22.sp,
     shadows: [Shadow(color: Colors.black.withOpacity(0.5))]);
+
+//GLOBAL VARIABLE
+
+String apiUrl = "http://192.168.1.48:5000";
+
+
+//LOADER
+const spinkit = SpinKitSquareCircle   (
+  color: Colors.white,
+  size: 50.0,
+  
+);

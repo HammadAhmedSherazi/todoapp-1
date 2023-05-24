@@ -2,15 +2,25 @@ import 'dart:io';
 
 import 'package:todoapp/export_all.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+  static final formKey = GlobalKey<FormState>();
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailTextController = TextEditingController();
+
   final TextEditingController passwordTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: pageDecoration,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
         body: ListView(
           padding: EdgeInsets.symmetric(horizontal: 30.r, vertical: 30.r),

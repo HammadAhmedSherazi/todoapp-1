@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context , child) {
+      // splitScreenMode: true,
+      builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Todo App',
@@ -28,15 +28,14 @@ class MyApp extends StatelessWidget {
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
           ),
           routes: {
-            '/SplachScreen' : (context) => const SplashScreen(),
-            '/SignUpScreen' : (context) =>  SignUpScreen(),
-            '/LoginScreen' : (context) =>  LoginScreen()
+            '/SplachScreen': (context) => const SplashScreen(),
+            '/SignUpScreen': (context) => SignUpScreen(),
+            '/LoginScreen': (context) => LoginScreen()
           },
           initialRoute: '/SplachScreen',
-          
+          debugShowMaterialGrid: false,
         );
       },
-      
     );
   }
 }

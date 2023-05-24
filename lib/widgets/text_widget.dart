@@ -2,10 +2,15 @@ import 'package:todoapp/export_all.dart';
 
 class TextWidget extends StatefulWidget {
   final String? hintText;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final bool? isPassword;
+  final String? Function(String?)? validator;
   const TextWidget(
-      {super.key, this.hintText, required this.controller, this.isPassword});
+      {super.key,
+      this.hintText,
+      this.controller,
+      this.isPassword,
+      this.validator});
 
   @override
   State<TextWidget> createState() => _TextWidgetState();
@@ -17,8 +22,23 @@ class _TextWidgetState extends State<TextWidget> {
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: showPass,
+      onSaved: (value) {
+        widget.controller!.text = value.toString();
+      },
+
       controller: widget.controller,
-      style: TextStyle(fontSize: 14.sp),
+      style: TextStyle(
+        fontSize: 14.sp,
+        color: Colors.black,
+      ),
+      validator: widget.validator ??
+          (value) {
+            if (value!.isEmpty) {
+              return "Required";
+            } else {
+              return null;
+            }
+          },
       decoration: InputDecoration(
           filled: true,
           fillColor: Colors.white,
@@ -28,7 +48,6 @@ class _TextWidgetState extends State<TextWidget> {
           ),
           isCollapsed: true,
           isDense: true,
-          
           contentPadding: EdgeInsets.all(15.r),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30.r),
@@ -62,3 +81,4 @@ class _TextWidgetState extends State<TextWidget> {
     );
   }
 }
+
