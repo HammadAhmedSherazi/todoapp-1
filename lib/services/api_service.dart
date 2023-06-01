@@ -15,6 +15,8 @@ registrationApi(Map<String, String> reqData, BuildContext context) async {
 
   if (jsonResponse['status']) {
     // ignore: use_build_context_synchronously
-    Navigator.pop(context);
+    Navigator.of(context)
+      ..pop()
+      ..pop();
   }
 }

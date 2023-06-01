@@ -18,10 +18,8 @@ TextStyle headingStyle = TextStyle(
 
 String apiUrl = "http://192.168.1.48:5000";
 
-
 //LOADER
-const spinkit = SpinKitSquareCircle   (
+const spinkit = SpinKitThreeBounce(
   color: Colors.white,
   size: 50.0,
-  
 );

@@ -13,7 +13,7 @@ class ButtonWidgetAndroid extends StatelessWidget {
     return ElevatedButton(
         onPressed: onTap,
         style: ButtonStyle(
-          
+            elevation: const MaterialStatePropertyAll(10.0),
             padding: MaterialStatePropertyAll(EdgeInsets.all(15.r)),
             shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                 borderRadius: BorderRadius.horizontal(
