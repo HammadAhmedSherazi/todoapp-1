@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:todoapp/export_all.dart';
+import 'package:todoapp/services/api_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
-  static final formKey = GlobalKey<FormState>();
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -12,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailTextController = TextEditingController();
-
+  static final formKey = GlobalKey<FormState>();
   final TextEditingController passwordTextController = TextEditingController();
 
   @override
@@ -22,48 +22,69 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
-        body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 30.r, vertical: 30.r),
-          children: [
-            130.verticalSpace,
-            Center(
-              child: Text(
-                'Sign In',
-                style: headingStyle,
+        body: Form(
+          key: formKey,
+          child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: 30.r, vertical: 30.r),
+            children: [
+              130.verticalSpace,
+              Center(
+                child: Text(
+                  'Sign In',
+                  style: headingStyle,
+                ),
               ),
-            ),
-            30.verticalSpace,
-            TextWidget(hintText: 'Email', controller: emailTextController),
-            10.verticalSpace,
-            TextWidget(
-              hintText: 'Password',
-              controller: passwordTextController,
-              isPassword: true,
-            ),
-            20.verticalSpace,
-            Platform.isAndroid
-                ? ButtonWidgetAndroid(buttonText: 'Login', onTap: () {})
-                : ButtonWidgetIOS(buttonText: 'Login', onTap: () {}),
-            40.verticalSpace,
-            Center(
-              child: GestureDetector(
-                onTap: () => Navigator.pushNamed(context, '/SignUpScreen'),
-                child: RichText(
-                    text: TextSpan(
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w500),
-                        children: const [
-                      TextSpan(text: 'Create an acount? '),
-                      TextSpan(
-                          text: 'Sign Up',
-                          style:
-                              TextStyle(decoration: TextDecoration.underline))
-                    ])),
+              30.verticalSpace,
+              TextWidget(hintText: 'Email', controller: emailTextController),
+              10.verticalSpace,
+              TextWidget(
+                hintText: 'Password',
+                controller: passwordTextController,
+                isPassword: true,
               ),
-            )
-          ],
+              20.verticalSpace,
+              Platform.isAndroid
+                  ? ButtonWidgetAndroid(
+                      buttonText: 'Login',
+                      onTap: () {
+                        if (formKey.currentState!.validate()) {
+                          Map<String, String> sendReq = {
+                            "email": emailTextController.text.trim(),
+                            "password": passwordTextController.text
+                          };
+                          loginApi(sendReq, context);
+                        }
+                      })
+                  : ButtonWidgetIOS(buttonText: 'Login', onTap: () {
+                     if (formKey.currentState!.validate()) {
+                          Map<String, String> sendReq = {
+                            "email": emailTextController.text.trim(),
+                            "password": passwordTextController.text
+                          };
+                          loginApi(sendReq, context);
+                        }
+                  }),
+              40.verticalSpace,
+              Center(
+                child: GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, '/SignUpScreen'),
+                  child: RichText(
+                      text: TextSpan(
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.w500),
+                          children: const [
+                        TextSpan(text: 'Create an acount? '),
+                        TextSpan(
+                            text: 'Sign Up',
+                            style:
+                                TextStyle(decoration: TextDecoration.underline))
+                      ])),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

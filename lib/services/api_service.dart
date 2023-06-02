@@ -20,3 +20,19 @@ registrationApi(Map<String, String> reqData, BuildContext context) async {
       ..pop();
   }
 }
+
+loginApi(Map<String, String> reqData, BuildContext context) async {
+  showDialog(
+    context: context,
+    builder: (context) => spinkit,
+  );
+  final response = await http.post(Uri.parse('$apiUrl/login'),
+      headers: {"Content-Type": "application/json"}, body: jsonEncode(reqData));
+
+  final jsonResponse = jsonDecode(response.body);
+
+  if (jsonResponse['status']) {
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+  }
+}
