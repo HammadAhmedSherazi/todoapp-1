@@ -46,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Platform.isAndroid
                   ? ButtonWidgetAndroid(
                       buttonText: 'Login',
+                      width: 362.w,
                       onTap: () {
                         if (formKey.currentState!.validate()) {
                           Map<String, String> sendReq = {
@@ -55,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           loginApi(sendReq, context);
                         }
                       })
-                  : ButtonWidgetIOS(buttonText: 'Login', onTap: () {
+                  : ButtonWidgetIOS(width: 362.w,buttonText: 'Login', onTap: () {
                      if (formKey.currentState!.validate()) {
                           Map<String, String> sendReq = {
                             "email": emailTextController.text.trim(),

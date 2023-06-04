@@ -5,14 +5,16 @@ import 'package:todoapp/export_all.dart';
 class ButtonWidgetAndroid extends StatelessWidget {
   final String buttonText;
   final VoidCallback onTap;
+  final double width;
   const ButtonWidgetAndroid(
-      {super.key, required this.buttonText, required this.onTap});
+      {super.key, required this.buttonText, required this.onTap, required this.width});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         onPressed: onTap,
         style: ButtonStyle(
+            fixedSize: MaterialStateProperty.all(Size.fromWidth(width)),
             elevation: const MaterialStatePropertyAll(10.0),
             padding: MaterialStatePropertyAll(EdgeInsets.all(15.r)),
             shape: MaterialStatePropertyAll(RoundedRectangleBorder(
@@ -35,13 +37,15 @@ class ButtonWidgetAndroid extends StatelessWidget {
 class ButtonWidgetIOS extends StatelessWidget {
   final String buttonText;
   final VoidCallback onTap;
+  final double  width;
   const ButtonWidgetIOS(
-      {super.key, required this.buttonText, required this.onTap});
+      {super.key, required this.buttonText, required this.onTap,required this.width});
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
         onPressed: onTap,
+        minSize: width,
         padding: EdgeInsets.all(15.r),
         color: const Color.fromARGB(209, 119, 51, 48),
         borderRadius: BorderRadius.horizontal(

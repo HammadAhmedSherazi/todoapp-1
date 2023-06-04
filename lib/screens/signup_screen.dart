@@ -67,6 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Platform.isAndroid
                   ? ButtonWidgetAndroid(
                       buttonText: 'Sign up',
+                      width: 362.w,
                       onTap: () async {
                         if (SignUpScreen.formKey.currentState!.validate()) {
                           Map<String, String> sendData = {
@@ -76,7 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           await registrationApi(sendData, context);
                         }
                       })
-                  : ButtonWidgetIOS(buttonText: 'Sign up', onTap: () {}),
+                  : ButtonWidgetIOS(buttonText: 'Sign up', onTap: () {}, width: 362.w,),
               40.verticalSpace,
               Center(
                 child: GestureDetector(
