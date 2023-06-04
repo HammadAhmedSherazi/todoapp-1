@@ -4,10 +4,16 @@ class TextWidget extends StatefulWidget {
   final String? hintText;
   final TextEditingController? controller;
   final bool? isPassword;
+  final bool? filled;
+  final Color ? fillColor;
+  final int ? maxlines;
   final String? Function(String?)? validator;
   const TextWidget(
       {super.key,
       this.hintText,
+      this.filled,
+      this.maxlines,
+      this.fillColor,
       this.controller,
       this.isPassword,
       this.validator});
@@ -39,9 +45,10 @@ class _TextWidgetState extends State<TextWidget> {
               return null;
             }
           },
+      maxLines: widget.maxlines ?? 1,
       decoration: InputDecoration(
-          filled: true,
-          fillColor: Colors.white,
+          filled: widget.filled ?? true,
+          fillColor: widget.fillColor ?? Colors.white,
           hintText: widget.hintText ?? 'Enter a text',
           hintStyle: TextStyle(
             fontSize: 14.sp,

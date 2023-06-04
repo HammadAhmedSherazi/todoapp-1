@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:todoapp/screens/login_screen.dart';
 import 'package:todoapp/screens/signup_screen.dart';
 
 import 'export_all.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,9 +28,10 @@ class MyApp extends StatelessWidget {
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
           ),
           routes: {
+            '/HomeScreen': (context) => const HomeScreen(),
             '/SplachScreen': (context) => const SplashScreen(),
-            '/SignUpScreen': (context) => SignUpScreen(),
-            '/LoginScreen': (context) => LoginScreen()
+            '/SignUpScreen': (context) => const SignUpScreen(),
+            '/LoginScreen': (context) => const LoginScreen()
           },
           initialRoute: '/SplachScreen',
           debugShowMaterialGrid: false,

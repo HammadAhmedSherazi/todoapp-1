@@ -32,7 +32,8 @@ loginApi(Map<String, String> reqData, BuildContext context) async {
   final jsonResponse = jsonDecode(response.body);
 
   if (jsonResponse['status']) {
+    token = jsonResponse['token'];
     // ignore: use_build_context_synchronously
-    Navigator.of(context).pop();
+    Navigator.of(context).pushNamedAndRemoveUntil('/HomeScreen', (Route<dynamic> route) => false);
   }
 }
