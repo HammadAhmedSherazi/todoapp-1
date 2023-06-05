@@ -74,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             "email": emailTextController.text.trim(),
                             "password": passwordTextController.text
                           };
-                          await registrationApi(sendData, context);
+                          await ApiService.registrationApi(sendData, context);
                         }
                       })
                   : ButtonWidgetIOS(buttonText: 'Sign up', onTap: () {}, width: 362.w,),

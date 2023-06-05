@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             "email": emailTextController.text.trim(),
                             "password": passwordTextController.text
                           };
-                          loginApi(sendReq, context);
+                          ApiService.loginApi(sendReq, context);
                         }
                       })
                   : ButtonWidgetIOS(width: 362.w,buttonText: 'Login', onTap: () {
@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             "email": emailTextController.text.trim(),
                             "password": passwordTextController.text
                           };
-                          loginApi(sendReq, context);
+                          ApiService.loginApi(sendReq, context);
                         }
                   }),
               40.verticalSpace,
