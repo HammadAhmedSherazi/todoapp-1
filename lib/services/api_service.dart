@@ -103,10 +103,9 @@ class ApiService {
         TodoModule item = TodoModule.fromJson(jsonResponse['todos'][i]);
         todoList.add(item);
       }
-
+      Navigator.of(context).pop();
+      
       // ignore: use_build_context_synchronously
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          '/HomeScreen', (Route<dynamic> route) => true);
     }
   }
 }
