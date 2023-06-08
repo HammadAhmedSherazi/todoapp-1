@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:todoapp/export_all.dart';
 
@@ -74,6 +74,39 @@ class ApiService {
       Navigator.of(context)
         ..pop()
         ..pop();
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          '/HomeScreen', (Route<dynamic> route) => false);
+    }
+  }
+
+  static getTodoList(Map<String, String> reqData, BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (context) => WillPopScope(
+        child: spinkit,
+        onWillPop: () async {
+          return false;
+        },
+      ),
+    );
+    final response = await http.post(Uri.parse('$apiUrl/getTodosList'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqData));
+
+    final jsonResponse = jsonDecode(response.body);
+
+    if (jsonResponse['status'] == 200 && jsonResponse['success']) {
+      todoList.clear();
+      for (var i = 0; i < jsonResponse['todos'].length; i++) {
+        // var lst = jsonDecode(jsonResponse['todos']);
+        TodoModule item = TodoModule.fromJson(jsonResponse['todos'][i]);
+        todoList.add(item);
+      }
+
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          '/HomeScreen', (Route<dynamic> route) => true);
     }
   }
 }

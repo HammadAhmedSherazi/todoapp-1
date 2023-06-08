@@ -2,6 +2,7 @@
 
 import '../export_all.dart';
 
+
 BoxDecoration pageDecoration = const BoxDecoration(
     gradient: LinearGradient(
         begin: Alignment.centerLeft,
@@ -24,3 +25,5 @@ const spinkit = SpinKitThreeBounce(
   color: Colors.white,
   size: 50.0,
 );
+
+final List<TodoModule?> todoList = [];
