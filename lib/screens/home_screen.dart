@@ -16,7 +16,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String? userId;
   TextEditingController titleTextController = TextEditingController();
   TextEditingController descTextController = TextEditingController();
-  var reqData;
+  
+  Map<String, String> ? reqData;
   @override
   void initState() {
     super.initState();
@@ -29,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "userId": userId.toString(),
     };
     Future.delayed(Duration.zero, () {
-      ApiService.getTodoList(reqData, context);
+      ApiService.getTodoList(reqData!, context);
       setState(() {});
     });
   }
@@ -170,8 +171,8 @@ class _HomeScreenState extends State<HomeScreen> {
             strokeWidth: 3,
             triggerMode: RefreshIndicatorTriggerMode.onEdge,
             onRefresh: () async {
-              await Future.delayed(Duration(milliseconds: 1500), () {
-                ApiService.getTodoList(reqData, context);
+              await Future.delayed(const Duration(milliseconds: 1500), () {
+                ApiService.getTodoList(reqData!, context);
               });
               setState(() {});
             },

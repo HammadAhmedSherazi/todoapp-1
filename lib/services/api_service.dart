@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:todoapp/export_all.dart';
 
@@ -103,6 +102,7 @@ class ApiService {
         TodoModule item = TodoModule.fromJson(jsonResponse['todos'][i]);
         todoList.add(item);
       }
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
       
       // ignore: use_build_context_synchronously

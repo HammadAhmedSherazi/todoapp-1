@@ -16,12 +16,12 @@ class TodoModule {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['userId'] = this.userId;
-    data['title'] = this.title;
-    data['desc'] = this.desc;
-    data['__v'] = this.iV;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['userId'] = userId;
+    data['title'] = title;
+    data['desc'] = desc;
+    data['__v'] = iV;
     return data;
   }
 }
