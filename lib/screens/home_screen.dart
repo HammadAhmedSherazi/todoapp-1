@@ -29,10 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
     reqData = {
       "userId": userId.toString(),
     };
-    Future.delayed(Duration.zero, () {
-      ApiService.getTodoList(reqData!, context);
-      setState(() {});
-    });
+    // Future.delayed(Duration.zero, () {
+    //   ApiService.getTodoList(reqData!, context);
+    //   setState(() {});
+    // });
   }
 
   @override
@@ -176,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
               });
               setState(() {});
             },
-            child: todoList.isNotEmpty
+            child: !todoList.isNotEmpty
                 ? ListView.separated(
                     padding: EdgeInsets.all(15.r),
                     itemBuilder: (context, index) => Slidable(
@@ -221,7 +221,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 icon:
                                     const Icon(Icons.check_box_outline_blank)),
                             title: Text(
-                              todoList[index]!.title!,
+                              // todoList[index]!.title!,
+                              "Todo Title",
                               style: TextStyle(
                                 fontSize: 15.sp,
                                 color: Colors.black,
@@ -229,7 +230,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             subtitle: Text(
-                              todoList[index]!.desc!,
+                              // todoList[index]!.desc!,
+                              "Todo Description",
                               style: TextStyle(
                                   fontSize: 10.sp, color: Colors.black),
                             ),
@@ -242,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         )),
                     separatorBuilder: (context, index) => 10.verticalSpace,
-                    itemCount: todoList.length,
+                    itemCount: 4,
                   )
                 : const SizedBox.shrink(),
           )),
