@@ -1,13 +1,20 @@
 
+import 'dart:math';
+
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:todoapp/providers/todo_state_provider.dart';
 
 import '../export_all.dart';
 
 class TodoWidget extends StatelessWidget {
    final TodoModule ? item;
-   const TodoWidget({
+    WidgetRef ? ref;
+    final int ? index;
+    TodoWidget({
     super.key,
-    this.item
+    this.item,
+    this.ref,
+    this.index
   });
 
   @override
@@ -30,7 +37,24 @@ class TodoWidget extends StatelessWidget {
           children: [
             // A SlidableAction can have an icon and/or a label.
             SlidableAction(
-              onPressed: (context) {},
+              onPressed: (context)  {
+                // print(item!.sId);
+                 showDialog(
+      context: context,
+      builder: (context) => WillPopScope(
+        child: spinkit,
+        onWillPop: () async {
+          return false;
+        },
+      ),
+    );
+              ApiService.deteteTodoApi(item!.sId!, context).then((value) {
+                if(value){
+                  ref?.read(todoListProvider.notifier).deleteTodo(index!);
+                  
+                }
+              });
+              },
               backgroundColor: Colors.transparent,
               foregroundColor: Colors.red,
               icon: Icons.delete,
@@ -50,9 +74,11 @@ class TodoWidget extends StatelessWidget {
           child: ListTile(
             contentPadding: EdgeInsets.zero,
             leading: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                    Icons.check_box_outline_blank)),
+                onPressed: () {
+                  ref?.read(todoListProvider.notifier).toggleTodoStatus(index!);                  
+                },
+                icon: !item!.isCheck! ? const Icon(
+                    Icons.check_box_outline_blank) : const Icon(Icons.check_box, color: Color.fromARGB(209, 119, 51, 48),)),
             title: Text(
               item!.title!,
               // "Todo Title",
@@ -63,8 +89,8 @@ class TodoWidget extends StatelessWidget {
               ),
             ),
             subtitle: Text( 
-              // item!.desc!,
-              "",
+              item!.desc!,
+              
               // "Todo Description",
               style: TextStyle(
                   fontSize: 10.sp, color: Colors.black),

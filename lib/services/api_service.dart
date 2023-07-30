@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
@@ -71,7 +73,7 @@ class ApiService {
   // ignore: todo
   //ADD TODO API
 
-  static addTodoApi(Map<String, String> reqData, BuildContext context) async {
+  static Future<TodoModule?> addTodoApi(Map<String, String> reqData, BuildContext context) async {
     showDialog(
       context: context,
       builder: (context) => WillPopScope(
@@ -92,10 +94,18 @@ class ApiService {
       Navigator.of(context)
         ..pop()
         ..pop();
+
+      TodoModule item = TodoModule.fromJson(jsonResponse['success']);
+      return item;
+    }
+    else{
+      Navigator.of(context)
+        ..pop()
+        ..pop();
+
+      throw Exception(response.reasonPhrase);
       
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          '/HomeScreen', (Route<dynamic> route) => false);
+      
     }
   }
 
@@ -109,29 +119,51 @@ class ApiService {
     if (jsonResponse['status'] == 200 && jsonResponse['success']) {
       // List todoList = [];
 
-     
-      
       return jsonResponse['todos'].map((e) => TodoModule.fromJson(e)).toList();
-    }
-    else{
+    } else {
       throw Exception(response.reasonPhrase);
     }
   }
 
   String endPoint = "https://jsonplaceholder.typicode.com/todos";
 
-  Future<List<TodoModule>> getTodos() async{
+  Future<List<TodoModule>> getTodos() async {
     var response = await http.get(Uri.parse(endPoint));
 
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       final List result = jsonDecode(response.body);
       return result.map((e) => TodoModule.fromJson(e)).toList();
+    } else {
+      throw Exception(response.reasonPhrase);
     }
-    else{
+  }
+
+  static Future<bool> deteteTodoApi(String todoId, BuildContext context) async {
+    // showDialog(
+    //   context: context,
+    //   builder: (context) => WillPopScope(
+    //     child: spinkit,
+    //     onWillPop: () async {
+    //       return false;
+    //     },
+    //   ),
+    // );
+    final response = await http.post(Uri.parse('$apiUrl/deleteTodo'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"id": todoId}));
+
+    final jsonResponse = jsonDecode(response.body);
+
+    if (jsonResponse['status'] == 200 && jsonResponse['success']) {
+      // Navigator.of(context).pop();
+      return jsonResponse['success'];
+    } else {
+      // ignore: avoid_single_cascade_in_expression_statements
+      // Navigator.of(context)..pop();
+
       throw Exception(response.reasonPhrase);
     }
   }
 }
-
 
 final apiServiceProvider = Provider<ApiService>((ref) => ApiService());

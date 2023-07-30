@@ -3,9 +3,10 @@ class TodoModule {
   String? userId;
   String? title;
   String? desc;
+  bool? isCheck;
   int? iV;
 
-  TodoModule({this.sId, this.userId, this.title, this.desc, this.iV});
+  TodoModule({this.sId, this.userId, this.title, this.desc, this.iV, this.isCheck});
 
   TodoModule.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -13,17 +14,18 @@ class TodoModule {
     title = json['title'];
     desc = json['desc'];
     iV = json['__v'];
+    isCheck = false;
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['userId'] = userId;
-    data['title'] = title;
-    data['desc'] = desc;
-    data['__v'] = iV;
-    return data;
-  }
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = <String, dynamic>{};
+  //   data['_id'] = sId;
+  //   data['userId'] = userId;
+  //   data['title'] = title;
+  //   data['desc'] = desc;
+  //   data['__v'] = iV;
+  //   return data;
+  // }
 }
 // class TodoModule {
 //   TodoModule({
