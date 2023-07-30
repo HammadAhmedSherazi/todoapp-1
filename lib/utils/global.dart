@@ -17,8 +17,9 @@ TextStyle headingStyle = TextStyle(
 
 //GLOBAL VARIABLE
 
-String apiUrl = "http://192.168.137.1:5000";
+String apiUrl = "http://192.168.1.53:5000";
 String token = "";
+String userId = "";
 
 //LOADER
 const spinkit = SpinKitThreeBounce(
@@ -26,4 +27,4 @@ const spinkit = SpinKitThreeBounce(
   size: 50.0,
 );
 
-final List<TodoModule?> todoList = [];
+// final List<TodoModule?> todoList = [];

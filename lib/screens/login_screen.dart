@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:todoapp/export_all.dart';
-import 'package:todoapp/services/api_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,9 +10,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailTextController = TextEditingController();
+  final TextEditingController emailTextController = TextEditingController(text: "hammad001@yopmail.com");
   static final formKey = GlobalKey<FormState>();
-  final TextEditingController passwordTextController = TextEditingController();
+  final TextEditingController passwordTextController = TextEditingController(text : "12345678");
 
   @override
   Widget build(BuildContext context) {

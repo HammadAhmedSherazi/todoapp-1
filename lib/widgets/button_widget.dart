@@ -43,19 +43,23 @@ class ButtonWidgetIOS extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
-        onPressed: onTap,
-        minSize: width,
-        padding: EdgeInsets.all(15.r),
-        color: const Color.fromARGB(209, 119, 51, 48),
-        borderRadius: BorderRadius.horizontal(
-            left: Radius.circular(30.r), right: Radius.circular(30.r)),
-        child: Text(
-          buttonText,
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 15.sp,
-              fontWeight: FontWeight.w600),
-        ));
+    return SizedBox(
+      height: 46,
+      child: CupertinoButton(
+          onPressed: onTap,
+          minSize: width,
+          alignment: Alignment.center,
+          // padding: EdgeInsets.all(15.r),
+          color: const Color.fromARGB(209, 119, 51, 48),
+          borderRadius: BorderRadius.horizontal(
+              left: Radius.circular(30.r), right: Radius.circular(30.r)),
+          child: Text(
+            buttonText,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 15.sp,
+                fontWeight: FontWeight.w600),
+          )),
+    );
   }
 }

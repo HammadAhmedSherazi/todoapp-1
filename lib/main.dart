@@ -1,10 +1,8 @@
-
-
 import 'export_all.dart';
 
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -27,7 +25,8 @@ class MyApp extends StatelessWidget {
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
           ),
           routes: {
-            '/HomeScreen': (context) => const HomeScreen(),
+            // '/TodoFetchScreen': (context) => const TodoFetchScreen(),
+            '/HomeScreen': (context) =>  HomeScreen(),
             '/SplachScreen': (context) => const SplashScreen(),
             '/SignUpScreen': (context) => const SignUpScreen(),
             '/LoginScreen': (context) => const LoginScreen()
