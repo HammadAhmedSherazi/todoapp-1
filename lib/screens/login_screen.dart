@@ -10,9 +10,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailTextController = TextEditingController(text: "hammad001@yopmail.com");
+  final TextEditingController emailTextController = TextEditingController();
   static final formKey = GlobalKey<FormState>();
-  final TextEditingController passwordTextController = TextEditingController(text : "12345678");
+  final TextEditingController passwordTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

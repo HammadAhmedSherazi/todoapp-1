@@ -17,7 +17,7 @@ TextStyle headingStyle = TextStyle(
 
 //GLOBAL VARIABLE
 
-String apiUrl = "http://192.168.137.1:5000";
+String apiUrl = "http://192.168.100.58:5000";
 String token = "";
 String userId = "";
 

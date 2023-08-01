@@ -16,10 +16,14 @@ export '../widgets/button_widget.dart';
 export '../widgets/todo_widget.dart';
 
 
-//CONTROLLERS
+//PROVIDERS
+export '../providers/todo_get_provider.dart';
+export '../providers/todo_state_provider.dart';
 
 //UTILS
 export '../utils/global.dart';
+export '../utils/dummy_data.dart';
+
 
 //MODELS
 export '../modules/todo_module.dart';

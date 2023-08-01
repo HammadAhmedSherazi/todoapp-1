@@ -1,16 +1,10 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:todoapp/export_all.dart';
 
-import 'package:todoapp/widgets/todo_consumer_widget.dart';
-
-import '../providers/todo_get_provider.dart';
-import '../providers/todo_state_provider.dart';
-
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -43,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,7 +51,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         child: Scaffold(
             backgroundColor: Colors.transparent,
+            drawer: drawer(),
+            key: scaffoldKey,
             appBar: AppBar(
+              leading: IconButton(
+                icon: const Icon(Icons.person_2_rounded),
+                onPressed: () => scaffoldKey.currentState!.openDrawer(),
+              ),
               backgroundColor: const Color(0xffF64F59),
               shape: RoundedRectangleBorder(
                   borderRadius:
@@ -109,48 +110,41 @@ class _HomeScreenState extends State<HomeScreen> {
                         ref.read(todoListProvider.notifier).listAdd(
                             List.generate(
                                 config.length, (index) => config[index]));
-                    isLoading = false;
-
+                        isLoading = false;
                       });
                     }
                     final todoList = ref.watch(todoListProvider);
-                    return  todoList.isEmpty && isLoading
+                    return todoList.isEmpty && isLoading
                         ? const Center(
                             child: CircularProgressIndicator(
                             color: Color.fromARGB(209, 119, 51, 48),
                           ))
-                        : todoList.isNotEmpty? ListView.separated(
-                            padding: EdgeInsets.only(
-                                top: 10.r,
-                                right: 10.r,
-                                left: 10.r,
-                                bottom: 50.r),
-                            itemBuilder: (context, index) => TodoWidget(
-                                  item: todoList[todoList.length - 1 - index],
-                                  index: todoList.length - 1 - index,
-                                  ref:  ref,
+                        : todoList.isNotEmpty
+                            ? ListView.separated(
+                                padding: EdgeInsets.only(
+                                    top: 10.r,
+                                    right: 10.r,
+                                    left: 10.r,
+                                    bottom: 50.r),
+                                itemBuilder: (context, index) => TodoWidget(
+                                      item:
+                                          todoList[todoList.length - 1 - index],
+                                      index: todoList.length - 1 - index,
+                                      ref: ref,
+                                    ),
+                                separatorBuilder: (context, index) =>
+                                    10.verticalSpace,
+                                itemCount: todoList.length)
+                            : const Center(
+                                child: Text(
+                                  "Add todos to get started!",
+                                  style: TextStyle(color: Colors.black),
                                 ),
-                            separatorBuilder: (context, index) =>
-                                10.verticalSpace,
-                            itemCount: todoList.length) : const Center(
-                              child: Text("Add todos to get started!", style: TextStyle(
-                                color: Colors.black
-                              ),),
-                            );
+                              );
                   },
                 );
               },
-            )
-
-            // !isLoading && todoItemList.isEmpty ? const Center(
-            //   child: CircularProgressIndicator(
-            //     color: Color.fromARGB(209, 119, 51, 48),
-            //   )
-            // ): todoItemList.isNotEmpty ? ListView.separated(shrinkWrap: true,itemBuilder: (context, index) => TodoWidget(item: todoItemList[index],), separatorBuilder: (context, index) => 10.verticalSpace, itemCount: todoItemList.length)
-            // : const Center(
-            //   child: Text("Todo is not exist yet!"),
-            // )
-            ));
+            )));
   }
 
   Future<dynamic> addTodoDailog(BuildContext context, WidgetRef ref) {
@@ -199,7 +193,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               "userId": userId,
                               "title": titleTextController.text,
                               "desc": descTextController.text,
-                              
                             };
                             await ApiService.addTodoApi(sendData, context)
                                 .then((vale) {
@@ -233,5 +226,73 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           );
         });
+  }
+
+  Drawer drawer() {
+    return Drawer(
+      clipBehavior: Clip.none,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(50.r),
+              bottomRight: Radius.circular(50.r))),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          DrawerHeader(
+              curve: Curves.linear,
+              child: Row(
+                children: [
+                  20.horizontalSpace,
+                  CircleAvatar(
+                    radius: 40.r,
+                    backgroundImage: const NetworkImage(
+                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0m5Cy4lXCbuyG54L0vuo3i5-ALavHe9KmhWA_wDM&s',
+                    ),
+                  ),
+                  20.horizontalSpace,
+                  Text(
+                    Data.userDetail!.name!,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 23.sp),
+                  )
+                ],
+              )),
+          10.verticalSpace,
+          ListTile(
+            onTap: () => Navigator.of(context).pop(),
+            leading: const Icon(
+              Icons.home,
+              color: Colors.black,
+            ),
+            title: Text(
+              "Home",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.sp),
+            ),
+          ),
+          const Spacer(),
+          ListTile(
+            onTap: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                '/LoginScreen', (Route<dynamic> route) => false),
+            leading: const Icon(
+              Icons.exit_to_app_sharp,
+              color: Colors.red,
+            ),
+            title: Text(
+              "Logout",
+              style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.sp),
+            ),
+          ),
+          80.verticalSpace
+        ],
+      ),
+    );
   }
 }

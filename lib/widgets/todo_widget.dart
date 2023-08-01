@@ -1,11 +1,11 @@
 
 
+// ignore_for_file: must_be_immutable
+
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:todoapp/providers/todo_state_provider.dart';
-
 import '../export_all.dart';
 
 class TodoWidget extends StatelessWidget {
@@ -170,7 +170,7 @@ class TodoWidget extends StatelessWidget {
                             await ApiService.updateTodo(todo.toJson())
                                 .then((val) {
                               if (val != null ) {
-                                TodoModule updatetodo = val;
+                                
                                 ref
                                     .read(todoListProvider.notifier)
                                     .updateTodoItem(index,val);

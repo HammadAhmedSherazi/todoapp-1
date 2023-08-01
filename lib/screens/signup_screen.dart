@@ -13,13 +13,17 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController emailTextController =
-      TextEditingController(text: 'jame001@yopmail.com');
+      TextEditingController();
 
   final TextEditingController passwordTextController =
-      TextEditingController(text: '12333');
+      TextEditingController();
 
   final TextEditingController confirmPasswordTextController =
-      TextEditingController(text: '12333');
+      TextEditingController();
+
+  final TextEditingController userNameTextController =
+      TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +45,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               30.verticalSpace,
+              TextWidget(hintText: 'Username', controller: userNameTextController),
+              10.verticalSpace,
               TextWidget(hintText: 'Email', controller: emailTextController),
               10.verticalSpace,
               TextWidget(
@@ -72,12 +78,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         if (SignUpScreen.formKey.currentState!.validate()) {
                           Map<String, String> sendData = {
                             "email": emailTextController.text.trim(),
-                            "password": passwordTextController.text
+                            "password": passwordTextController.text,
+                            "name" : userNameTextController.text.trim()
                           };
                           await ApiService.registrationApi(sendData, context);
                         }
                       })
-                  : ButtonWidgetIOS(buttonText: 'Sign up', onTap: () {}, width: 362.w,),
+                  : ButtonWidgetIOS(buttonText: 'Sign up', onTap: () async {
+                     if (SignUpScreen.formKey.currentState!.validate()) {
+                          Map<String, String> sendData = {
+                            "email": emailTextController.text.trim(),
+                            "password": passwordTextController.text,
+                            "name" : userNameTextController.text.trim()
+                          };
+                          await ApiService.registrationApi(sendData, context);
+                        }
+                  }, width: 362.w,),
               40.verticalSpace,
               Center(
                 child: GestureDetector(

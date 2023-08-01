@@ -55,7 +55,8 @@ class ApiService {
       // ApiService().reqData = {
       //   "userId": jsonResponse['userId'].toString(),
       // };
-      userId = jsonResponse['userId'].toString();
+      Data.userDetail = User.fromJson(jsonResponse['user']);
+      userId = Data.userDetail!.sId!;
       // ignore: use_build_context_synchronously
       Navigator.of(context).pushNamedAndRemoveUntil(
           '/HomeScreen', (Route<dynamic> route) => false);
