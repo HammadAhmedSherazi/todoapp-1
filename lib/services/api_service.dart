@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
-import 'dart:developer';
+
 import 'package:http/http.dart' as http;
 import 'package:todoapp/export_all.dart';
 
@@ -73,7 +73,8 @@ class ApiService {
   // ignore: todo
   //ADD TODO API
 
-  static Future<TodoModule?> addTodoApi(Map<String, String> reqData, BuildContext context) async {
+  static Future<TodoModule?> addTodoApi(
+      Map<String, String> reqData, BuildContext context) async {
     showDialog(
       context: context,
       builder: (context) => WillPopScope(
@@ -97,15 +98,12 @@ class ApiService {
 
       TodoModule item = TodoModule.fromJson(jsonResponse['success']);
       return item;
-    }
-    else{
+    } else {
       Navigator.of(context)
         ..pop()
         ..pop();
 
       throw Exception(response.reasonPhrase);
-      
-      
     }
   }
 
@@ -120,19 +118,6 @@ class ApiService {
       // List todoList = [];
 
       return jsonResponse['todos'].map((e) => TodoModule.fromJson(e)).toList();
-    } else {
-      throw Exception(response.reasonPhrase);
-    }
-  }
-
-  String endPoint = "https://jsonplaceholder.typicode.com/todos";
-
-  Future<List<TodoModule>> getTodos() async {
-    var response = await http.get(Uri.parse(endPoint));
-
-    if (response.statusCode == 200) {
-      final List result = jsonDecode(response.body);
-      return result.map((e) => TodoModule.fromJson(e)).toList();
     } else {
       throw Exception(response.reasonPhrase);
     }
@@ -161,6 +146,18 @@ class ApiService {
       // ignore: avoid_single_cascade_in_expression_statements
       // Navigator.of(context)..pop();
 
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
+  static Future<TodoModule?> updateTodo(Object item) async {
+    final response = await http.patch(Uri.parse('$apiUrl/updateTodo'),
+        headers: {"Content-Type": "application/json"}, body: jsonEncode(item));
+    final jsonResponse = jsonDecode(response.body);
+
+    if (jsonResponse['status'] == 200 && jsonResponse['success']) {
+      return TodoModule.fromJson(jsonResponse['todo']);
+    } else {
       throw Exception(response.reasonPhrase);
     }
   }

@@ -14,19 +14,21 @@ class TodoModule {
     title = json['title'];
     desc = json['desc'];
     iV = json['__v'];
-    isCheck = false;
+    isCheck = json['isCheck'];
   }
 
-  // Map<String, dynamic> toJson() {
-  //   final Map<String, dynamic> data = <String, dynamic>{};
-  //   data['_id'] = sId;
-  //   data['userId'] = userId;
-  //   data['title'] = title;
-  //   data['desc'] = desc;
-  //   data['__v'] = iV;
-  //   return data;
-  // }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['userId'] = userId;
+    data['title'] = title;
+    data['desc'] = desc;
+    data['__v'] = iV;
+    data['isCheck'] = isCheck;
+    return data;
+  }
 }
+
 // class TodoModule {
 //   TodoModule({
 //     required this.userId,

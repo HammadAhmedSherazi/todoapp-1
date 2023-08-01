@@ -1,5 +1,7 @@
 
-import 'dart:math';
+
+import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todoapp/providers/todo_state_provider.dart';
@@ -16,6 +18,9 @@ class TodoWidget extends StatelessWidget {
     this.ref,
     this.index
   });
+
+  TextEditingController titleTextController = TextEditingController();
+  TextEditingController descTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +52,14 @@ class TodoWidget extends StatelessWidget {
           return false;
         },
       ),
-    );
+    );        
+
               ApiService.deteteTodoApi(item!.sId!, context).then((value) {
                 if(value){
                   ref?.read(todoListProvider.notifier).deleteTodo(index!);
                   
                 }
+                Navigator.of(context).popUntil((route) => false);
               });
               },
               backgroundColor: Colors.transparent,
@@ -74,9 +81,14 @@ class TodoWidget extends StatelessWidget {
           child: ListTile(
             contentPadding: EdgeInsets.zero,
             leading: IconButton(
-                onPressed: () {
+                onPressed: () async{
+                      // print(item!.toJson());
+                      // print(jsonEncode(item!.toJson()));
                   ref?.read(todoListProvider.notifier).toggleTodoStatus(index!);                  
-                },
+                    log(item.toString());
+                    item!.isCheck = !(item!.isCheck!); 
+                    ApiService.updateTodo(item!.toJson());
+                  },
                 icon: !item!.isCheck! ? const Icon(
                     Icons.check_box_outline_blank) : const Icon(Icons.check_box, color: Color.fromARGB(209, 119, 51, 48),)),
             title: Text(
@@ -96,12 +108,101 @@ class TodoWidget extends StatelessWidget {
                   fontSize: 10.sp, color: Colors.black),
             ),
             trailing: IconButton(
-                onPressed: () {},
+                onPressed: () {
+
+                  editTodoDialog(context, ref!, item!, index!);
+                },
                 icon: Icon(
                   Icons.edit,
                   size: 18.r,
                 )),
           ),
         ));
+  }
+
+  Future<dynamic> editTodoDialog(BuildContext context, WidgetRef ref, TodoModule todo, int index){
+    titleTextController.text = todo.title!;
+    descTextController.text = todo.desc!;
+    return showDialog(
+        context: context,
+
+        // user must tap button!
+        builder: (BuildContext context) {
+          return Material(
+            type: MaterialType.transparency,
+            child: Container(
+              padding: EdgeInsets.all(20.r),
+              margin: EdgeInsets.symmetric(horizontal: 30.r, vertical: 180.r),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.r)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                // 30.verticalSpace,
+                children: [
+                  Text(
+                    'Edit Todo',
+                    style: TextStyle(
+                        fontSize: 20.sp,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  TextWidget(
+                    controller: titleTextController,
+                    fillColor: const Color.fromARGB(255, 238, 222, 227),
+                    hintText: "Title",
+                  ),
+                  TextWidget(
+                    controller: descTextController,
+                    fillColor: const Color.fromARGB(255, 238, 222, 227),
+                    hintText: "Description...",
+                    maxlines: 5,
+                  ),
+                  Platform.isAndroid
+                      ? ButtonWidgetAndroid(
+                          buttonText: "Add".toUpperCase(),
+                          width: 362.w,
+                          onTap: () async {
+                            todo.title = titleTextController.text;
+                            todo.desc = descTextController.text;
+
+                            await ApiService.updateTodo(todo.toJson())
+                                .then((val) {
+                              if (val != null ) {
+                                TodoModule updatetodo = val;
+                                ref
+                                    .read(todoListProvider.notifier)
+                                    .updateTodoItem(index,val);
+                              }
+                            });
+                            
+                            Navigator.of(context).pop();
+;
+                            // ref.watch(todoProvider).whenData((value) => null);
+                            titleTextController.text = "";
+                            descTextController.text = "";
+                          },
+                        )
+                      : ButtonWidgetIOS(
+                          buttonText: "Add".toUpperCase(),
+                          width: 362.w,
+                          onTap: () async {
+                            Map<String, String> sendData = {
+                              "userId": userId,
+                              "title": titleTextController.text,
+                              "desc": descTextController.text
+                            };
+                            await ApiService.addTodoApi(sendData, context);
+                            titleTextController.text = "";
+                            descTextController.text = "";
+                          },
+                        )
+                ],
+              ),
+            ),
+          );
+        });
+
   }
 }

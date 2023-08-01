@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '../export_all.dart';
 
 class TodoListNotifier extends StateNotifier<List<TodoModule>> {
@@ -27,6 +29,12 @@ class TodoListNotifier extends StateNotifier<List<TodoModule>> {
         sId: state[index].sId,
         userId: state[index].userId
       );
+
+      
+  }
+
+  void updateTodoItem(int index, TodoModule item){
+    state =List.from(state)..[index] = item;
   }
 }
 
