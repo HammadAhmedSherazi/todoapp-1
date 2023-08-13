@@ -73,7 +73,6 @@ class ApiService {
 
   // ignore: todo
   //ADD TODO API
-
   static Future<TodoModule?> addTodoApi(
       Map<String, String> reqData, BuildContext context) async {
     showDialog(
@@ -125,15 +124,15 @@ class ApiService {
   }
 
   static Future<bool> deteteTodoApi(String todoId, BuildContext context) async {
-    // showDialog(
-    //   context: context,
-    //   builder: (context) => WillPopScope(
-    //     child: spinkit,
-    //     onWillPop: () async {
-    //       return false;
-    //     },
-    //   ),
-    // );
+    showDialog(
+      context: context,
+      builder: (context) => WillPopScope(
+        child: spinkit,
+        onWillPop: () async {
+          return false;
+        },
+      ),
+    );
     final response = await http.post(Uri.parse('$apiUrl/deleteTodo'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"id": todoId}));
@@ -142,6 +141,8 @@ class ApiService {
 
     if (jsonResponse['status'] == 200 && jsonResponse['success']) {
       // Navigator.of(context).pop();
+      Navigator.of(context)
+        ..pop();
       return jsonResponse['success'];
     } else {
       // ignore: avoid_single_cascade_in_expression_statements

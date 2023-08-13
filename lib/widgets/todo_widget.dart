@@ -44,22 +44,24 @@ class TodoWidget extends StatelessWidget {
             SlidableAction(
               onPressed: (context)  {
                 // print(item!.sId);
-                 showDialog(
-      context: context,
-      builder: (context) => WillPopScope(
-        child: spinkit,
-        onWillPop: () async {
-          return false;
-        },
-      ),
-    );        
+    //              showDialog(
+    //   context: context,
+    //   builder: (context) => WillPopScope(
+    //     child: spinkit,
+    //     onWillPop: () async {
+    //       return false;
+    //     },
+    //   ),
+    // );        
 
               ApiService.deteteTodoApi(item!.sId!, context).then((value) {
                 if(value){
                   ref?.read(todoListProvider.notifier).deleteTodo(index!);
                   
                 }
-                Navigator.of(context).popUntil((route) => false);
+      // Navigator.popUntil(context, (route) => false);
+
+                
               });
               },
               backgroundColor: Colors.transparent,

@@ -231,6 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Drawer drawer() {
     return Drawer(
       clipBehavior: Clip.none,
+      width: 260.w,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(50.r),
@@ -239,23 +240,24 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           DrawerHeader(
+
               curve: Curves.linear,
-              child: Row(
+              child: Column(
                 children: [
-                  20.horizontalSpace,
+                  // 20.horizontalSpace,
                   CircleAvatar(
-                    radius: 40.r,
+                    radius: 42.r,
                     backgroundImage: const NetworkImage(
                       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0m5Cy4lXCbuyG54L0vuo3i5-ALavHe9KmhWA_wDM&s',
                     ),
                   ),
-                  20.horizontalSpace,
+                  50.horizontalSpace,
                   Text(
                     Data.userDetail!.name!,
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
-                        fontSize: 23.sp),
+                        fontSize: 24.sp),
                   )
                 ],
               )),
